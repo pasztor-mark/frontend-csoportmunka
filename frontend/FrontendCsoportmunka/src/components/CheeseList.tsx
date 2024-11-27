@@ -4,7 +4,7 @@ import { CheeseComponent } from "./CheeseComponent";
 
 
 export interface Cheese {
-    id: number;
+    id?: number;
     nev: string;
     tipus: string;
     tejfele: string;
