@@ -70,7 +70,7 @@ export default function CheeseAdd(){
                     required
                     onChange={ (e) => setName(e.target.value) }
                 />
-            </label>
+            </label><br/><br/>
             <label>
                 <p>Type:</p>
                 <input 
@@ -79,7 +79,7 @@ export default function CheeseAdd(){
                     required
                     onChange={ (e) => setType(e.target.value) }
                 />
-            </label>  
+            </label>  <br/><br/>
             <label>
                 <p>Milk type:</p>
                 <input 
@@ -88,7 +88,7 @@ export default function CheeseAdd(){
                     required
                     onChange={ (e) => setMilk_type(e.target.value) }
                 />
-            </label>
+            </label><br/><br/>
             <label>
                 <p>Aging time:</p>
                 <input 
@@ -97,7 +97,7 @@ export default function CheeseAdd(){
                     required
                     onChange={ (e) => setAging_time(parseInt(e.target.value)) }
                 />
-            </label>
+            </label><br/><br/>
             <label>
                 <p>Origin:</p>
                 <input 
@@ -106,7 +106,7 @@ export default function CheeseAdd(){
                     required
                     onChange={ (e) => setOrigin(e.target.value) }
                 />
-            </label>
+            </label><br/><br/>
             <label>
                 <p>Flavor:</p>
                 <input 
@@ -115,10 +115,10 @@ export default function CheeseAdd(){
                     required
                     onChange={ (e) => setFlavor(e.target.value) }
                 />
-            </label>
+            </label><br/><br/>
             <button type="submit">Sajt felvétele</button>                   
         </form>
         { error && <p>Hiba történt: {error}.</p> }
-        { success && <p>Sikeres a telefonfelvétel</p> }
+        { success && <p>Sikeres a sajtfelvétel!</p> }
     </>
 }

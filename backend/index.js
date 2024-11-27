@@ -132,6 +132,53 @@ app.patch('/sajtok/:sajtId', async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+app.get('/sajtokType/:type', async (req, res) => {
+    try {
+        let type = req.params.type
+        const [rows, fields] = await db.query('SELECT * FROM sajtok WHERE tipus LIKE ?', [type]);
+        if (rows.length === 0) {
+            res.status(404).json({ error: "Cheese not found" });
+        } else {
+            res.status(200).json(rows)}
 
+    } catch (error) {
+        console.error(`Error retrieving cheeses ${error}`);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+app.get('/sajtokName/:name', async (req, res) => {
+    try {
+        let name = req.params.type
+        const [rows, fields] = await db.query('SELECT * FROM sajtok WHERE nev LIKE ?', [name]);
+        if (rows.length === 0) {
+            res.status(404).json({ error: "Cheese not found" });
+        } else {
+            res.status(200).json(rows)}
+
+    } catch (error) {
+        console.error(`Error retrieving cheeses ${error}`);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
+app.get('/home', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+    try {        
+        const countResult = await db.query('SELECT COUNT(*) as total FROM sajtok');
+        const total = countResult[0][0].total;
+        const temp = await db.query('SELECT * FROM sajtok LIMIT ? OFFSET ?', [limit, offset]);
+        const rows = temp[0];
+        res.status(200).json({
+            data: rows,
+            currentPage: page,
+            totalPages: Math.ceil(total / limit),
+        });
+    } catch (error) {
+        console.error(`Error retrieving cheeses ${error}`);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 app.listen(3000);
