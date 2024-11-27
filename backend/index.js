@@ -33,13 +33,14 @@ app.get('/sajtok/:id', async (req, res) => {
 app.get('/erlelt', async (req, res) => {
 
 
-    const temp = await db.query('SELECT * FROM sajtok WHERE erlelesi_ido != "0 hónap"');
+    const temp = await db.query('SELECT * FROM sajtok WHERE erlelesi_ido != "nem érlelt"');
     const rows = temp[0];
 
     res.status(200).json(rows);
 
 })
-/*app.post('/sajtok', async (req, res) => {
+
+app.post('/sajtok', async (req, res) => {
     try {
         let sajt = [req.body.nev, req.body.tipus, req.body.tejfele, req.body.erlelesi_ido, req.body.szarmazas, req.body.iz];
 
@@ -47,7 +48,7 @@ app.get('/erlelt', async (req, res) => {
             return res.status(400).json({ error: "Érvénytelen" });
         }
         if (sajt[1].length < 1) {
-            return res.status(400).json({ error: "Phone model must have at least 1 character" });
+            return res.status(400).json({ error: "Cheese must have at least 1 character" });
         }
 
 
@@ -59,22 +60,78 @@ app.get('/erlelt', async (req, res) => {
         console.error(` ${error}`);
         res.status(500).json({ error: "Internal Server Error" });
     }
-})*/
+})
 
-/*app.delete('/phones/:phoneId', async (req, res) => {
+app.delete('/sajtok/:sajtId', async (req, res) => {
     try {
-        let phoneId = parseInt(req.params.phoneId);
-        const [rows, fields] = await db.query('DELETE FROM phones WHERE id =?', [phoneId]);
+        let sajtId = parseInt(req.params.sajtId);
+        const [rows, fields] = await db.query('DELETE FROM sajtok WHERE id =?', [sajtId]);
         if (rows.length === 0) {
-            res.status(404).json({ error: "Phone not found" });
+            res.status(404).json({ error: "Cheese not found" });
         } else {
-            res.status(200).json({ message: "Phone successfully removed" });
+            res.status(200).json({ message: "Cheese successfully removed" });
         }
 
     } catch (error) {
-        console.error(`Error retrieving phones ${error}`);
+        console.error(`Error retrieving cheeses ${error}`);
         res.status(500).json({ error: "Internal Server Error" });
     }
 })
-*/
+
+app.patch('/sajtok/:sajtId', async (req, res) => {
+    try {
+        let sajtId = parseInt(req.params.sajtId);
+        let { nev, tipus, tejfele, erlelesi_ido, szarmazas, iz } = req.body;
+
+        let updatedFields = [];
+        let values = [];
+
+        if (nev && nev.length > 0) {
+            updatedFields.push('nev = ?');
+            values.push(nev);
+        }
+        if (tipus && tipus.length > 0) {
+            updatedFields.push('tipus = ?');
+            values.push(tipus);
+        }
+        if (tejfele && tejfele.length > 0) {
+            updatedFields.push('tejfele = ?');
+            values.push(tejfele);
+        }
+        if (erlelesi_ido && erlelesi_ido.length > 0) {
+            updatedFields.push('erlelesi_ido = ?');
+            values.push(erlelesi_ido);
+        }
+        if (szarmazas && szarmazas.length > 0) {
+            updatedFields.push('szarmazas = ?');
+            values.push(szarmazas);
+        }
+        if (iz && iz.length > 0) {
+            updatedFields.push('iz = ?');
+            values.push(iz);
+        }
+
+        if (updatedFields.length === 0) {
+            return res.status(400).json({ error: "At least one field must be provided for update" });
+        }
+
+        values.push(sajtId);
+
+        const query = `UPDATE sajtok SET ${updatedFields.join(', ')} WHERE id = ?`;
+
+        const [rows, fields] = await db.query(query, values);
+
+        if (rows.affectedRows === 0) {
+            return res.status(404).json({ error: "Cheese not found" });
+        }
+
+        res.status(200).json({ message: "Cheese updated successfully" });
+
+    } catch (error) {
+        console.error(`Error updating cheese: ${error}`);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
 app.listen(3000);
