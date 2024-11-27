@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
 import { NavigationBar } from "./NavigationBar";
+import { CheeseComponent } from "./CheeseComponent";
 
 
-interface Cheese {
+export interface Cheese {
     id: number;
-    name: string;
-    type: string;
-    milk_type: string;
-    aging_time: number;
-    origin: string;
-    flavor: string;
+    nev: string;
+    tipus: string;
+    tejfele: string;
+    erlelesi_ido: number;
+    szarmazas: string;
+    iz: string;
 }
 
 export default function CheeseList() {
@@ -31,7 +32,8 @@ export default function CheeseList() {
                 return response.json() 
             })
             .then((data) => {
-                setCheese(data);
+                console.log(data as Cheese)
+                setCheese(data as Cheese);
                 setLoading(false);
             })
             .catch((error) => { 
@@ -50,15 +52,13 @@ export default function CheeseList() {
     }
 
     return <>
-        <h1>Sajtok</h1>
-        <h2>Menü</h2>
-        <NavigationBar />
+        
         <h2>Sajtok listája</h2>
         <ul>
             {cheese.map((cheese) => (
-                    <li key={cheese.id}>
-                        {cheese.name} - {cheese.type} - {cheese.milk_type} - { cheese.aging_time } - { cheese.origin } - { cheese.flavor }
-                    </li>
+                    <CheeseComponent cheese={cheese} key={cheese.id}>
+                        
+                    </CheeseComponent>
                     )
                 )
             }
