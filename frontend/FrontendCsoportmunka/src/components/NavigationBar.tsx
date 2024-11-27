@@ -13,6 +13,9 @@ export const NavigationBar = () => {
           <Navbar.Text>
             <Link to="/">Kezdőlap</Link>
           </Navbar.Text>
+          <Navbar.Text>
+            <Link to="/cheeseList">Sajtok Listája</Link>
+          </Navbar.Text>
         </Navbar.Collapse>
       </Container>
     </Navbar>
