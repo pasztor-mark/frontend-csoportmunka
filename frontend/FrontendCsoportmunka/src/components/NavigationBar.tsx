@@ -20,6 +20,9 @@ export const NavigationBar = () => {
             <Link to="/cheeseAdd">Sajt hozzáadása</Link>
           </Navbar.Text>
           <Navbar.Text>
+            <Link to="/cheeseUpdate">Sajt szerkesztése</Link>
+          </Navbar.Text>
+          <Navbar.Text>
             <Link to="/cheeseDelete">Sajt törlése</Link>
           </Navbar.Text>
         </Navbar.Collapse>
