@@ -9,12 +9,18 @@ export const NavigationBar = () => {
       <Container>
         <Navbar.Brand>Sajtok</Navbar.Brand>
         <Navbar.Toggle />
-        <Navbar.Collapse className="justify-content-end">
+        <Navbar.Collapse className="justify-content-between">
           <Navbar.Text>
             <Link to="/">Kezdőlap</Link>
           </Navbar.Text>
           <Navbar.Text>
             <Link to="/cheeseList">Sajtok Listája</Link>
+          </Navbar.Text>
+          <Navbar.Text>
+            <Link to="/cheeseAdd">Sajt hozzáadása</Link>
+          </Navbar.Text>
+          <Navbar.Text>
+            <Link to="/cheeseDelete">Sajt törlése</Link>
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>

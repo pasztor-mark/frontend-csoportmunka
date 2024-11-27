@@ -30,7 +30,7 @@ export default function CheeseAdd(){
             nev: name,
             tipus: type,
             tejfele: milk_type,
-            erlelesi_ido: aging_time,
+            erlelesi_ido: aging_time + " hónap",
             szarmazas: origin,
             iz: flavor,
         }
@@ -59,9 +59,7 @@ export default function CheeseAdd(){
         }
     }
     return <>
-        <h1>Sajtok</h1>
-        <h2>Menü</h2>
-        <NavigationBar />
+        
         <h2>Sajtok felvétele</h2>
         <form onSubmit={handleSubmit}>
             <label>

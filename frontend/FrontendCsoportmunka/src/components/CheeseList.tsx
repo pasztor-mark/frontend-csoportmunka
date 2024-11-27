@@ -8,7 +8,7 @@ export interface Cheese {
     nev: string;
     tipus: string;
     tejfele: string;
-    erlelesi_ido: number;
+    erlelesi_ido: string;
     szarmazas: string;
     iz: string;
 }

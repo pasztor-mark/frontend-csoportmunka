@@ -1,20 +1,14 @@
 import { useEffect, useState } from "react"
 import { NavigationBar } from "./NavigationBar";
+import { Cheese } from "./CheeseList";
+import { CheeseComponent } from "./CheeseComponent";
 
 
-interface Cheese {
-    id: number;
-    name: string;
-    type: string;
-    milk_type: string;
-    aging_time: number;
-    origin: string;
-    flavor: string;
-}
+
 
 export default function CheeseDelete() {
 
-    const [cheese, setCheese] = useState<Cheese[]>([]);
+    const [cheese, setCheese] = useState<Cheese[]>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState(null);
     const [errorServer, setErrorServer] = useState<string>("");
@@ -24,7 +18,7 @@ export default function CheeseDelete() {
         if(answer){
             //alert("Törlendő telefon: " + id) 
             try {
-                const response = await fetch(`http://localhost:3000/phones/${id}`, {
+                const response = await fetch(`http://localhost:3000/sajtok/${id}`, {
                     method: 'DELETE',
                 } )
                 setCheese(cheese.filter( (cheese)=>cheese.id !== id))
@@ -65,19 +59,20 @@ export default function CheeseDelete() {
     }
 
     return <>
-        <h1>Sajtok</h1>
-        <h2>Menü</h2>
-        <NavigationBar />
+        
         <h2>Sajtok törlése</h2>
         <ul>
-            {cheese.map((cheese) => (
-                    <li key={cheese.id}>
-                        {cheese.name} - {cheese.type} - {cheese.milk_type} - { cheese.aging_time } - { cheese.origin } - { cheese.flavor }
-                        <span
-                            style={{ cursor: 'pointer', marginLeft: '10px' }}
+            {cheese!.map((cheese) => (
+                <div className="d-flex flex-row items-center">
+                    <CheeseComponent cheese={cheese} key={cheese.id}/>
+                    <span
+                            style={{ cursor: 'pointer', backgroundColor: "red", marginLeft: '10px' }}
                             onClick={ () => handleDelete(cheese.id)}
                         >Törlés</span>
-                    </li>
+                </div>
+                        
+
+                    
                     )
                 )
             }
